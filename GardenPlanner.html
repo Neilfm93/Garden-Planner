@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Garden Planner</title>
+  <style>
+    /* Your CSS styles for garden planner layout, grid, plants, etc. */
+  </style>
+</head>
+<body>
+  <h1>Garden Planner</h1>
+  
+  <form id="gardenForm">
+    <label for="width">Width:</label>
+    <input type="number" id="width" name="width" min="1" max="30" required><br><br>
+  
+    <label for="length">Length:</label>
+    <input type="number" id="length" name="length" min="1" max="30" required><br><br>
+  
+    <input type="submit" value="Plan Garden">
+  </form>
+
+  <div id="garden">
+    <!-- This is where the garden grid will be displayed -->
+  </div>
+
+  <script>
+    document.getElementById('gardenForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevents default form submission
+
+      const width = document.getElementById('width').value;
+      const length = document.getElementById('length').value;
+
+      const garden = document.getElementById('garden');
+      garden.innerHTML = ''; // Clear previous grid
+
+      // Create grid cells based on width and length inputs
+      for (let i = 0; i < width * length; i++) {
+        const gridCell = document.createElement('div');
+        gridCell.classList.add('grid-cell');
+        garden.appendChild(gridCell);
+      }
+
+      // Implement drag-and-drop functionality for plants or elements
+      const gridCells = document.querySelectorAll('.grid-cell');
+      gridCells.forEach(cell => {
+        cell.addEventListener('dragover', function(e) {
+          e.preventDefault();
+        });
+
+        cell.addEventListener('drop', function(e) {
+          e.preventDefault();
+          const draggedItem = document.querySelector('.dragging');
+          if (draggedItem) {
+            this.appendChild(draggedItem);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
